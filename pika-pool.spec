@@ -4,12 +4,12 @@
 #
 Name     : pika-pool
 Version  : 0.1.3
-Release  : 2
+Release  : 3
 URL      : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Source0  : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : 0BSD
+License  : BSD-3-Clause
 Requires: pika-pool-python
 BuildRequires : pbr
 BuildRequires : pip
