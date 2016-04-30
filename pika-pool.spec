@@ -4,7 +4,7 @@
 #
 Name     : pika-pool
 Version  : 0.1.3
-Release  : 4
+Release  : 5
 URL      : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Source0  : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Summary  : No detailed summary available
