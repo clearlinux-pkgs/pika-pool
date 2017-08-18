@@ -4,7 +4,7 @@
 #
 Name     : pika-pool
 Version  : 0.1.3
-Release  : 9
+Release  : 10
 URL      : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Source0  : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Summary  : No detailed summary available
@@ -41,20 +41,27 @@ python components for the pika-pool package.
 %setup -q -n pika-pool-0.1.3
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1487904912
+export SOURCE_DATE_EPOCH=1503072423
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1487904912
+export SOURCE_DATE_EPOCH=1503072423
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+echo ----[ mark ]----
+cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
+echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*
+/usr/lib/python3*/*
