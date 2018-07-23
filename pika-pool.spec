@@ -4,18 +4,19 @@
 #
 Name     : pika-pool
 Version  : 0.1.3
-Release  : 11
+Release  : 12
 URL      : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Source0  : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
+Requires: pika-pool-python3
 Requires: pika-pool-python
 Requires: pika
+BuildRequires : buildreq-distutils3
 BuildRequires : pbr
 BuildRequires : pika
 BuildRequires : pip
-BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
@@ -32,9 +33,19 @@ pika-pool
 %package python
 Summary: python components for the pika-pool package.
 Group: Default
+Requires: pika-pool-python3
 
 %description python
 python components for the pika-pool package.
+
+
+%package python3
+Summary: python3 components for the pika-pool package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the pika-pool package.
 
 
 %prep
@@ -45,15 +56,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1503072423
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1532383384
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1503072423
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -63,5 +71,7 @@ echo ----[ mark ]----
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python2*/*
+
+%files python3
+%defattr(-,root,root,-)
 /usr/lib/python3*/*
