@@ -4,7 +4,7 @@
 #
 Name     : pika-pool
 Version  : 0.1.3
-Release  : 18
+Release  : 19
 URL      : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Source0  : https://github.com/bninja/pika-pool/archive/v0.1.3.tar.gz
 Summary  : Pools for pikas.
@@ -20,90 +20,11 @@ BuildRequires : pika
 =========
 pika-pool
 =========
-
 .. image:: https://travis-ci.org/bninja/pika-pool.png
-   :target: https://travis-ci.org/bninja/pika-pool
-   
+:target: https://travis-ci.org/bninja/pika-pool
+
 .. image:: https://coveralls.io/repos/bninja/pika-pool/badge.png?branch=master
-   :target: https://coveralls.io/r/bninja/pika-pool?branch=master
-
-Pika connection pooling inspired by:
-
-- `flask-pika <https://github.com/WeatherDecisionTechnologies/flask-pika>`_
-- `sqlalchemy.pool.Pool <http://docs.sqlalchemy.org/en/latest/core/pooling.html#sqlalchemy.pool.Pool>`_
-
-Typically you'll go with local `shovels <https://www.rabbitmq.com/shovel.html>`_, `krazee-eyez kombu <http://bit.ly/1txcnnO>`_, etc. but this works too.
-
-usage
------
-
-Get it:
-
-.. code:: bash
-
-   pip install pika-pool
-
-and use it:
-
-.. code:: python
-
-   import json
-
-   import pika
-   import pika_pool
-
-   params = pika.URLParameters(
-      'amqp://guest:guest@localhost:5672/?'
-      'socket_timeout=10&'
-      'connection_attempts=2'
-    )
-
-    pool = pika_pool.QueuedPool(
-        create=lambda: pika.BlockingConnection(parameters=params),
-        max_size=10,
-        max_overflow=10,
-        timeout=10,
-        recycle=3600,
-        stale=45,
-    )
-
-    with pool.acquire() as cxn:
-        cxn.channel.basic_publish(
-            body=json.dumps({
-                'type': 'banana',
-                'description': 'they are yellow'
-            }),
-            exchange='',
-            routing_key='fruits',
-            properties=pika.BasicProperties(
-                content_type='application/json',
-                content_encoding='utf-8',
-                delivery_mode=2,
-            )
-        )
-
-release
--------
-
-Tests pass:
-
-.. code:: bash
-
-   py.test test.py --cov=pika_pool --cov-report term-missing
-
-so update ``__version__`` in:
-
-- ``__init__.py``
-
-then commit and tag it:
-
-.. code:: bash
-
-   git commit -am "release v{version}"
-   git tag -a v{version} -m "release v{version}"
-   git push --tags
-
-and `travis <https://travis-ci.org/bninja/pika-pool>`_ will publish it to `pypi <https://pypi.python.org/pypi/pika-pool/>`_.
+:target: https://coveralls.io/r/bninja/pika-pool?branch=master
 
 %package python
 Summary: python components for the pika-pool package.
@@ -118,7 +39,8 @@ python components for the pika-pool package.
 Summary: python3 components for the pika-pool package.
 Group: Default
 Requires: python3-core
-Provides: pypi(pika-pool)
+Provides: pypi(pika_pool)
+Requires: pypi(pika)
 
 %description python3
 python3 components for the pika-pool package.
@@ -133,8 +55,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583202185
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583538975
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
